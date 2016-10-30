@@ -10,5 +10,8 @@ main = hspec spec
 spec :: Spec
 spec = do
   describe "stringifyField" $ do
+    it "returns the same string" $ do
+      stringifyField "VALUE" `shouldBe` "VALUE"
+
     it "returns a number as a string" $ do
       stringifyField 1 `shouldBe` "1"
