@@ -1,9 +1,6 @@
 module Lib
-    ( someFunc, stringifyField
+    ( stringifyField
     ) where
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
 
 stringifyField :: (Show a) => a -> String
 stringifyField x = removeRedundantQuotes $ show x
