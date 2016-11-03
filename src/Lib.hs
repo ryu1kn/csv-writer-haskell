@@ -8,13 +8,16 @@ stringifyField :: Wrappable a => a -> String
 stringifyField = show . wrap
 
 
-data WrappedValue = WrappedInt Int | WrappedString String_
+data WrappedValue =
+      WrappedInt Int
+    | WrappedString String_
+    | WrappedArray [WrappedValue]
 
-class (Show a) => Wrappable a where
+class Wrappable a where
     wrap :: a -> WrappedValue
 
     wrapAll :: [a] -> WrappedValue
-    wrapAll = toWrappedString . intercalate "" . map show
+    wrapAll = WrappedArray . map wrap
 
 instance Wrappable Int where
     wrap = WrappedInt
