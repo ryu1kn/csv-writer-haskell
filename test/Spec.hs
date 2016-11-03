@@ -14,4 +14,4 @@ spec = do
             stringifyField "VALUE" `shouldBe` "VALUE"
 
         it "returns a number as a string" $ do
-            stringifyField 1 `shouldBe` "1"
+            stringifyField (1 :: Int) `shouldBe` "1"

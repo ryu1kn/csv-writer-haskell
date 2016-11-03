@@ -2,10 +2,43 @@ module Lib
     ( stringifyField
     ) where
 
-stringifyField :: (Show a) => a -> String
-stringifyField x = removeRedundantQuotes $ show x
+import Data.List
 
-removeRedundantQuotes :: String -> String
-removeRedundantQuotes ('\"':xs)
-    | last xs == '\"' = init xs
-removeRedundantQuotes xs = xs
+stringifyField :: Wrappable a => a -> String
+stringifyField = show . wrap
+
+
+data WrappedValue = WrappedInt Int | WrappedString String_
+
+class (Show a) => Wrappable a where
+    wrap :: a -> WrappedValue
+
+    wrapAll :: [a] -> WrappedValue
+    wrapAll = toWrappedString . intercalate "" . map show
+
+instance Wrappable Int where
+    wrap = WrappedInt
+
+instance Wrappable Char where
+    wrap = toWrappedString . (:[])
+    wrapAll = toWrappedString
+
+instance Wrappable String_ where
+    wrap = WrappedString
+
+instance Wrappable a => Wrappable [a] where
+    wrap = wrapAll
+
+instance Show WrappedValue where
+    show (WrappedInt x) = show x
+    show (WrappedString x) = toString x
+
+
+newtype String_ = String_ { toString :: String }
+
+instance Show String_ where
+    show = toString
+
+
+toWrappedString :: String -> WrappedValue
+toWrappedString = WrappedString . String_
