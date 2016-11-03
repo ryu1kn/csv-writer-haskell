@@ -21,11 +21,3 @@ instance Wrappable Char where
 
 instance Wrappable a => Wrappable [a] where
     wrap = WrappedArray . map wrap
-
--- Can I pull this out from this module?
-instance Show WrappedValue where
-    show (WrappedInt x) = show x
-    show (WrappedChar x) = [x]
-    show (WrappedArray []) = []
-    show (WrappedArray xs@(WrappedChar x : _)) = map (\(WrappedChar x) -> x) xs
-    show (WrappedArray xs) = concatMap show xs
