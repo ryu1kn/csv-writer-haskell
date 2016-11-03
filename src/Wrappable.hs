@@ -7,39 +7,25 @@ module Wrappable (
 
 data WrappedValue =
       WrappedInt Int
-    | WrappedString String_
+    | WrappedChar Char
     | WrappedArray [WrappedValue]
 
 class Wrappable a where
     wrap :: a -> WrappedValue
 
-    wrapAll :: [a] -> WrappedValue
-    wrapAll = WrappedArray . map wrap
-
 instance Wrappable Int where
     wrap = WrappedInt
 
 instance Wrappable Char where
-    wrap = toWrappedString . (:[])
-    wrapAll = toWrappedString
-
-instance Wrappable String_ where
-    wrap = WrappedString
+    wrap = WrappedChar
 
 instance Wrappable a => Wrappable [a] where
-    wrap = wrapAll
+    wrap = WrappedArray . map wrap
 
 -- Can I pull this out from this module?
 instance Show WrappedValue where
     show (WrappedInt x) = show x
-    show (WrappedString x) = toString x
-
-
-newtype String_ = String_ { toString :: String }
-
-instance Show String_ where
-    show = toString
-
-
-toWrappedString :: String -> WrappedValue
-toWrappedString = WrappedString . String_
+    show (WrappedChar x) = [x]
+    show (WrappedArray []) = []
+    show (WrappedArray xs@(WrappedChar x : _)) = map (\(WrappedChar x) -> x) xs
+    show (WrappedArray xs) = concatMap show xs
