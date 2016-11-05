@@ -16,6 +16,5 @@ spec = do
         it "returns an integer as a string" $ do
             stringifyField (1 :: Int) `shouldBe` "1"
 
-        -- TODO: Make it pass
-        -- it "returns a number as a string" $ do
-        --     stringifyField 1 `shouldBe` "1"
+        it "returns a float number as a string" $ do
+            stringifyField (1.5 :: Float) `shouldBe` "1.5"

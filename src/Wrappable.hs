@@ -7,6 +7,7 @@ module Wrappable (
 
 data WrappedValue =
       WrappedInt Int
+    | WrappedFloat Float
     | WrappedChar Char
     | WrappedArray [WrappedValue]
 
@@ -15,6 +16,9 @@ class Wrappable a where
 
 instance Wrappable Int where
     wrap = WrappedInt
+
+instance Wrappable Float where
+    wrap = WrappedFloat
 
 instance Wrappable Char where
     wrap = WrappedChar
