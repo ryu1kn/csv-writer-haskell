@@ -1,12 +1,8 @@
 
 module Lib (stringifyField) where
 
-import Data.Typeable
+import Wrappable
+import WrappableShow
 
-stringifyField :: (Typeable a, Show a) => a -> String
-stringifyField field
-    | typeName == "[Char]" = (read . show) field
-    | typeName == "Char"   = (read . show) [field]
-    | otherwise            = show field
-    where
-        typeName = (show . typeOf) field
+stringifyField :: Wrappable a => a -> String
+stringifyField = show . wrap
