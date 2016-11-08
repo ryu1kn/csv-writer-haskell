@@ -18,3 +18,9 @@ spec = do
 
         it "returns a float number as a string" $ do
             stringifyField (1.5 :: Float) `shouldBe` "1.5"
+
+        it "wraps a field value with double quotes if the field contains comma" $ do
+            stringifyField "VALUE,A" `shouldBe` "\"VALUE,A\""
+
+        it "wraps a field value with double quotes if the field contains newline" $ do
+            stringifyField "VALUE\nA" `shouldBe` "\"VALUE\nA\""
