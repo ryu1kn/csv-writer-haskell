@@ -21,6 +21,12 @@ spec = describe "stringifyField" $ do
     it "returns a float number as a string" $
         stringifyField (1.5 :: Float) `shouldBe` "1.5"
 
+    it "returns a double number as a string" $
+        stringifyField (1.5 :: Double) `shouldBe` "1.5"
+
+    it "returns a boolean value as a string" $
+        stringifyField True `shouldBe` "True"
+
     it "wraps a field value with double quotes if the field contains comma" $
         stringifyField "VALUE,A" `shouldBe` "\"VALUE,A\""
 
